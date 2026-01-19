@@ -1,6 +1,13 @@
 import { NavLink } from "react-router";
 import logo from "../assets/logo.png";
 
+const links = (
+  <>
+    <li><NavLink to="/">Home</NavLink></li>
+    <li><NavLink to="/donations">Donation Requests</NavLink></li>
+  </>
+);
+
 const Navbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm px-4">
@@ -15,8 +22,7 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
           >
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/donations">Donation Requests</NavLink></li>
+            {links}
           </ul>
         </div>
 
@@ -32,8 +38,7 @@ const Navbar = () => {
       {/* Center */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal gap-2">
-          <li><NavLink to="/">Home</NavLink></li>
-          <li><NavLink to="/donations">Donation Requests</NavLink></li>
+            {links}
         </ul>
       </div>
 
