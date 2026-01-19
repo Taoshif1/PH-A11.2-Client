@@ -5,6 +5,7 @@ import lsh1 from "../assets/lsh1.png";
 import lsh2 from "../assets/lsh2.png";
 import lsh3 from "../assets/lsh3.png";
 import lsh4 from "../assets/lsh4.png";
+import lsh6 from "../assets/lsh6.png";
 
 const Hero = () => {
   return (
@@ -45,7 +46,7 @@ const Hero = () => {
           transition={{ duration: 0.9, delay: 0.2 }}
           className="grid grid-cols-2 gap-4"
         >
-          {[lsh1, lsh4, lsh2, lsh3].map((img, i) => (
+          {[lsh1, lsh4, lsh6, lsh3].map((img, i) => (
             <motion.img
               key={i}
               src={img}
