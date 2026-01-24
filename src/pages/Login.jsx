@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { MdLogin } from "react-icons/md"
+import { TiUserAdd } from "react-icons/ti";
+import { FcGoogle } from "react-icons/fc";
+import { FaSignInAlt } from "react-icons/fa";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,19 +46,22 @@ const Login = () => {
           <h1 className="text-4xl font-bold text-gradient mb-2">
             Welcome Back!
           </h1>
-          <p className="text-gray-600">
-            Login to access your account
-          </p>
-          <p className="text-gray-500 mt-2 text-sm">
-            New here?{" "}
-            <Link to="/register" className="text-blue-600 font-semibold hover:underline">
-              Register
+          <p className="text-gray-600">Login to access your account</p>
+          <div className="flex justify-center ">
+            <p className="text-gray-500 mt-2 text-sm">
+               New here?{" "}
+              <Link to="/register" className="text-blue-600 font-semibold hover:underline inline-flex items-center gap-1">
+              <TiUserAdd></TiUserAdd> Register
             </Link>
-          </p>
+            </p>
+          </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleLogin} className="bg-white p-8 rounded-2xl shadow-xl space-y-4 border border-gray-100">
+        <form
+          onSubmit={handleLogin}
+          className="bg-white p-8 rounded-2xl shadow-xl space-y-4 border border-gray-100"
+        >
           <input
             type="email"
             placeholder="Email"
@@ -73,6 +81,7 @@ const Login = () => {
           />
 
           <button type="submit" className="btn btn-error w-full text-white">
+            <FaSignInAlt />
             Login
           </button>
 
@@ -81,6 +90,7 @@ const Login = () => {
             onClick={handleGoogleLogin}
             className="btn btn-outline w-full"
           >
+            <FcGoogle className="text-2xl mr-2" />
             Login with Google
           </button>
         </form>

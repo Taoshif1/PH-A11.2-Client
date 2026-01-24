@@ -17,7 +17,7 @@ const HowItWorks = () => {
           viewport={{ once: true }}
           className="text-3xl md:text-4xl font-bold mb-12"
         >
-          How LifeStream Works
+          How <span className="text-red-500">LifeStream</span> Works
         </motion.h2>
 
         <div className="grid md:grid-cols-3 gap-8">

@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { MdLogin } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { FaSignInAlt } from "react-icons/fa";
+
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -43,12 +47,14 @@ const Register = () => {
           <p className="text-gray-600">
             Create your account to get started
           </p>
-          <p className="text-gray-500 mt-2 text-sm">
+          <div className="flex justify-center ">
+            <p className="text-gray-500 mt-2 text-sm">
             Already have an account?{" "}
-            <Link to="/login" className="text-purple-600 font-semibold hover:underline">
-              Login
+            <Link to="/login" className="text-purple-600 font-semibold hover:underline inline-flex items-center gap-1">
+              <MdLogin></MdLogin> Login
             </Link>
           </p>
+          </div>
         </div>
 
         {/* Form */}
@@ -81,15 +87,17 @@ const Register = () => {
           />
 
           <button type="submit" className="btn btn-error w-full text-white">
-            Register
+            <FaSignInAlt />
+            Sign Up
           </button>
 
           <button
             type="button"
             onClick={handleGoogleSignup}
             className="btn btn-outline w-full"
-          >
-            Register with Google
+          > 
+            <FcGoogle className="text-2xl mr-2" />
+            Sign Up with Google
           </button>
         </form>
       </div>

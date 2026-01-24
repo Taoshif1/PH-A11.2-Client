@@ -17,7 +17,7 @@ const WhyDonate = () => {
           viewport={{ once: true }}
           className="text-3xl md:text-4xl font-bold mb-12"
         >
-          Why <span className="text-red-500">Donate</span> Blood?
+          Why Donate <span className="text-red-500"> Blood </span>?
         </motion.h2>
 
         <div className="grid gap-6 md:grid-cols-1">

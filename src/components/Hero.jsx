@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import { NavLink } from "react-router";
+import { BiSolidDonateBlood } from "react-icons/bi";
+import { MdOutlineBloodtype } from "react-icons/md";
+
 
 import lsh1 from "../assets/lsh1.png";
 import lsh2 from "../assets/lsh2.png";
@@ -31,10 +34,10 @@ const Hero = () => {
 
           <div className="flex flex-wrap gap-4">
             <NavLink to="/register" className="btn btn-error text-white">
-              Become a Donor
+              <BiSolidDonateBlood /> Become a Donor
             </NavLink>
             <NavLink to="/donations" className="btn btn-outline btn-error">
-              Request Blood
+              <MdOutlineBloodtype /> Request Blood
             </NavLink>
           </div>
         </motion.div>

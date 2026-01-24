@@ -1,54 +1,69 @@
 import { NavLink } from "react-router";
 import logo from "../assets/logo.png";
+import { IoMdHome } from "react-icons/io";
+import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md";
+import { IoMenu, IoClose } from "react-icons/io5";
+import { useState } from "react";
 
 const links = (
   <>
-    <li><NavLink to="/">Home</NavLink></li>
-    <li><NavLink to="/donations">Donation Requests</NavLink></li>
+    <li><NavLink to="/" className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"> <IoMdHome /> Home</NavLink></li>
+    <li><NavLink to="/find-donors" className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"> <MdFindInPage /> Find Donors</NavLink></li>
+    <li><NavLink to="/events" className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"> <MdEvent /> Events</NavLink></li>
+    <li><NavLink to="/about-us" className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"> <MdBloodtype /> About Us</NavLink></li>
   </>
 );
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Helper Toggle function
+  // const toggleMenu = () => setIsOpen(!isOpen);
+
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4">
+    <nav className="relative bg-white shadow-md px-6 py-4 flex items-center justify-between">
       
-      {/* Left */}
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            ☰
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
-          >
-            {links}
-          </ul>
-        </div>
+      {/* Left: Logo & Mobile Toggle */}
+      <div className="flex items-center gap-4">
+        {/* Hamburger / Cross Icon */}
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="lg:hidden text-gray-700 focus:outline-none z-50"
+        >
+          {isOpen ? <IoClose size={28} /> : <IoMenu size={28} />}
+        </button>
 
         {/* Logo */}
-        <NavLink to="/" className="flex items-center gap-2">
-          <img src={logo} alt="LifeStream" className="w-48" />
-          {/* <span className="text-xl font-bold">
-            Life<span className="text-red-500">Stream</span>
-          </span> */}
+        <NavLink to="/" className="flex items-center">
+          <img src={logo} alt="LifeStream" className="w-40" />
         </NavLink>
       </div>
 
-      {/* Center */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal gap-2">
-            {links}
+      {/* Center: Desktop Links */}
+      <div className="hidden lg:flex">
+        <ul className="flex flex-row gap-6 font-medium">
+          {links}
         </ul>
       </div>
 
-      {/* Right */}
-      <div className="navbar-end">
-        <NavLink to="/login" className="btn btn-error text-white">
-          Login
+      {/* Right: Login Button */}
+      <div className="flex">
+        <NavLink to="/login" className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition">
+          <MdLogin /> Login
         </NavLink>
       </div>
-    </div>
+
+      {/* Mobile Menu Overlay */}
+      {/* This will slide/show only when isOpen is true */}
+      <div className={`
+        absolute top-full left-0 w-full bg-white shadow-lg lg:hidden transition-all duration-300 ease-in-out z-40
+        ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}
+      `}>
+        <ul className="flex flex-col p-4 space-y-2" onClick={() => setIsOpen(false)}>
+          {links}
+        </ul>
+      </div>
+    </nav>
   );
 };
 
