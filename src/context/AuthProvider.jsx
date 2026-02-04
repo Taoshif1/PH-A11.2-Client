@@ -17,7 +17,10 @@ const AuthProvider = ({ children }) => {
         return () => unsubscribe(); // Cleanup
     }, []);
 
-    const authInfo = { user, loading, logout: () => signOut(auth) };
+    const authInfo = { 
+        user, 
+        loading, 
+        logout: () => signOut(auth) };
 
     return (
         <AuthContext value={authInfo}> {/* React 19 Syntax */}

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { AuthContext, useAuth } from "../context/AuthContext";
 import { MdLogin } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";
@@ -12,6 +12,8 @@ const Register = () => {
   const [name, setName] = useState("");
   const { registerUser, googleSignIn } = useAuth();
   const navigate = useNavigate();
+  const {registerUser: registerUserContext } = use(AuthContext);
+  console.log("Inside Register -> ", registerUserContext);
 
   const handleRegister = async (e) => {
     e.preventDefault();

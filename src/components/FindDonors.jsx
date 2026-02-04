@@ -4,7 +4,7 @@ const FindDonors = () => {
     
     return (
         <div>
-            <h3>Donors Here</h3>
+            <h1 className="text-2xl font-bold">Find Donors</h1>
         </div>
     );
 };

@@ -6,6 +6,8 @@ import Register from "../pages/Register";
 import FindDonors from "../components/FindDonors";
 import Events from "../components/Events";
 import AboutUs from "../components/AboutUs";
+import Dashboard from "../components/Dashboard";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,12 @@ export const router = createBrowserRouter([
       {
         path: "/about-us",
         Component: AboutUs,
+      },
+      {
+        path: "/dashboard",
+        element:<PrivateRoute>
+          <Dashboard></Dashboard>
+        </PrivateRoute>
       }
     ],
   },

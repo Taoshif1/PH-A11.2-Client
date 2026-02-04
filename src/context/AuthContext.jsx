@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -46,12 +46,14 @@ const AuthProvider = ({ children }) => {
   // Logout
   const logOut = () => signOut(auth);
 
-  // Listen for auth state changes
+  // Handles memory leaks by placing listeners inside useEffect
+  // Listen for auth state changes / set observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
+    // Cleanup observer / subscription on unmount
     return unsubscribe;
   }, []);
 
@@ -63,7 +65,8 @@ const AuthProvider = ({ children }) => {
         googleSignIn, 
         loginUser, 
         registerUser, 
-        logOut }}>
+        logOut 
+        }}>
       {children}
     </AuthContext.Provider>
   );
