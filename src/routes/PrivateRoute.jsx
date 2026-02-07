@@ -1,22 +1,27 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router';
 
 const PrivateRoute = ({ children }) => {
-    
     const { user, loading } = useAuth();
     const location = useLocation();    
+    console.log("Location ", location);
     
     // loading ? <span className="loading loading-spinner loading-lg"></span> : 
     if(loading){
-        return <span className="loading loading-spinner loading-lg"></span>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
     }
     
-    return (
+    if (!user) {
+        // We pass the entire location object as 'from'
+        return <Navigate to="/login" state={{ from: location }} replace />;
+    }
 
-        !user ? <Navigate to="/login" state={{ from: location }} replace ></Navigate> : children
-
-    );
+    return children;
 };
 
 export default PrivateRoute;

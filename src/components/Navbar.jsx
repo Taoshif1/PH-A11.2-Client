@@ -5,53 +5,62 @@ import { CiLogout } from "react-icons/ci";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md";
 import { IoMenu, IoClose } from "react-icons/io5";
-import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-
-const links = (
-  <>
-    <li>
-      <NavLink
-        to="/"
-        className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded">
-        <IoMdHome /> Home
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="/find-donors"
-        className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded">
-        <MdFindInPage /> Find Donors
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="/events"
-        className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded">
-        <MdEvent /> Events
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="/about-us"
-        className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded">
-        <MdBloodtype /> About Us
-      </NavLink>
-    </li>
-    <li>
-      <NavLink
-        to="/dashboard"
-        className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded">
-        <TbLayoutDashboardFilled /> DashBoard
-      </NavLink>
-    </li>
-  </>
-);
+import { useState, useContext } from "react";
+import { useAuth  } from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useAuth();
   // console.log("User in Navbar ", user);
+
+  const links = (
+    <>
+      <li>
+        <NavLink
+          to="/"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <IoMdHome /> Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/find-donors"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <MdFindInPage /> Find Donors
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/events"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <MdEvent /> Events
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/about-us"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <MdBloodtype /> About Us
+        </NavLink>
+      </li>
+        <li>
+          <NavLink
+            to="/dashboard"
+            className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+          >
+            <TbLayoutDashboardFilled /> DashBoard
+          </NavLink>
+        </li>
+
+      {/* {user && (
+      )} */}
+
+    </>
+  );
 
   // Helper Toggle function
   // const toggleMenu = () => setIsOpen(!isOpen);
@@ -92,8 +101,8 @@ const Navbar = () => {
             <button
               onClick={logOut}
               className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition flex items-center gap-2"
-            > 
-            <CiLogout /> Logout
+            >
+              <CiLogout /> Logout
             </button>
           </>
         ) : (

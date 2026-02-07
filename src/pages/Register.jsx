@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { AuthContext, useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
 import { MdLogin } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";

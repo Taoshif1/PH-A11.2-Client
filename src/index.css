@@ -4,5 +4,6 @@
  }
 
 
-
-
+  .active {
+    @apply bg-red-500 text-white font-semibold scale-105 transition;
+  }

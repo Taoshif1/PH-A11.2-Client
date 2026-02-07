@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { MdLogin } from "react-icons/md"
+import { useAuth } from "../hooks/useAuth";
+import { MdLogin } from "react-icons/md";
 import { TiUserAdd } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +12,9 @@ const Login = () => {
   const { loginUser, googleSignIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+
+  // Get the path the user came from, or default to "/dashboard"
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -49,10 +50,13 @@ const Login = () => {
           <p className="text-gray-600">Login to access your account</p>
           <div className="flex justify-center ">
             <p className="text-gray-500 mt-2 text-sm">
-               New here?{" "}
-              <Link to="/register" className="text-blue-600 font-semibold hover:underline inline-flex items-center gap-1">
-              <TiUserAdd></TiUserAdd> Register
-            </Link>
+              New here?{" "}
+              <Link
+                to="/register"
+                className="text-blue-600 font-semibold hover:underline inline-flex items-center gap-1"
+              >
+                <TiUserAdd></TiUserAdd> Register
+              </Link>
             </p>
           </div>
         </div>
