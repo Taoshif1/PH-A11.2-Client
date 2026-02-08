@@ -4,9 +4,10 @@ import { IoMdHome } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md";
+import { BiDonateHeart } from "react-icons/bi";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useState, useContext } from "react";
-import { useAuth  } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/"
-          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded "
         >
           <IoMdHome /> Home
         </NavLink>
@@ -47,18 +48,17 @@ const Navbar = () => {
           <MdBloodtype /> About Us
         </NavLink>
       </li>
-        <li>
-          <NavLink
-            to="/dashboard"
-            className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
-          >
-            <TbLayoutDashboardFilled /> DashBoard
-          </NavLink>
-        </li>
+      <li>
+        <NavLink
+          to="/dashboard"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <TbLayoutDashboardFilled /> DashBoard
+        </NavLink>
+      </li>
 
       {/* {user && (
       )} */}
-
     </>
   );
 
@@ -88,8 +88,9 @@ const Navbar = () => {
         <ul className="flex flex-row gap-6 font-medium">{links}</ul>
       </div>
 
-      {/* Right: Dynamic Login Button */}
+      {/* Right: Dynamic Login & Donor Button */}
       <div className="flex items-center gap-3">
+        {/* login button */}
         {user ? (
           <>
             {/* User Name */}
@@ -100,7 +101,7 @@ const Navbar = () => {
             {/* Logout */}
             <button
               onClick={logOut}
-              className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition flex items-center gap-2"
+              className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition flex items-center gap-2 hover:scale-105"
             >
               <CiLogout /> Logout
             </button>
@@ -108,11 +109,23 @@ const Navbar = () => {
         ) : (
           <NavLink
             to="/login"
-            className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition"
+            className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-700 transition hover:scale-105"
           >
             <MdLogin /> Login
           </NavLink>
         )}
+
+        {/* Be a donor button */}
+        <NavLink
+          to="/beadonor"
+          className={({ isActive }) =>
+            `btn ${isActive ? "btn-disabled" : "btn-error text-white"} flex items-center gap-2 shadow-sm transition-all hover:scale-105`
+          }
+        >
+          <BiDonateHeart size={20} />
+          Be A Donor
+        </NavLink>
+
       </div>
 
       {/* Mobile Menu Overlay */}

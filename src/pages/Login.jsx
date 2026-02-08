@@ -80,7 +80,7 @@ const Login = () => {
               className={`input input-bordered w-full ${errors.password ? "input-error" : ""}`}
               {...register("password", { required: "Password is required" })}
             />
-            {errors.password && <span className="text-red-500 text-xs mt-1">{errors.password.message}</span>}
+            {errors.password && <span className=" text-xs mt-1">{errors.password.message}</span>}
           </div>
 
           {/* login button */}
