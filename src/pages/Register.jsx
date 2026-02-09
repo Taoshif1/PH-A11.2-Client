@@ -6,6 +6,18 @@ import { MdLogin } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import districtsData from "../../public/districts.json"
+
+
+const districtList = districtsData.find(item => item.type === "table").data;
+
+console.log(districtList)
+
+// 2. Accessing fields
+districtList.forEach(district => {
+    console.log(`ID: ${district.id}, Name: ${district.name}, Bangla: ${district.bn_name}`);
+});
 
 const Register = () => {
   // const [email, setEmail] = useState("");
@@ -13,7 +25,7 @@ const Register = () => {
   // const [name, setName] = useState("");
   const { registerUser, googleSignIn } = useAuth();
   const navigate = useNavigate();
-  const { registerUser: registerUserContext } = use(AuthContext);
+  // const { registerUser: registerUserContext } = use(AuthContext);
   const {
     register,
     handleSubmit,
@@ -24,8 +36,23 @@ const Register = () => {
 
   const handleRegister = async (data) => {
     try {
-      await registerUserContext(data.email, data.password, data.fullName);
-      console.log("Data inside registration -> ", data);
+      const res = await registerUser(data.email, data.password);
+      console.log("Data inside registration -> ", res);
+
+      // After Firebase success → Save in DB
+      const userInfo = {
+        uid: res.user.uid,
+        name: data.fullName,
+        email: data.email,
+        role: "donor",
+        status: "active",
+        bloodGroup: data.bloodGroup || "",
+        district: data.district || "",
+        upazila: data.upazila || "",
+      };
+
+      await axios.post("/users", userInfo);
+
       alert("Registration successful!");
       navigate("/login");
     } catch (err) {
@@ -36,12 +63,21 @@ const Register = () => {
 
   const handleGoogleSignup = async () => {
     try {
-      await googleSignIn();
-      alert("Signup with Google successful!");
+      const res = await googleSignIn();
+
+      const userInfo = {
+        uid: res.user.uid,
+        name: res.user.displayName,
+        email: res.user.email,
+        role: "donor",
+        status: "active",
+      };
+
+      await axios.post("/users", userInfo);
+
       navigate("/");
     } catch (err) {
       console.error(err);
-      alert(err.message);
     }
   };
 
@@ -89,7 +125,7 @@ const Register = () => {
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "Please enter a valid email address",
-              }
+              },
             })}
             required
           />

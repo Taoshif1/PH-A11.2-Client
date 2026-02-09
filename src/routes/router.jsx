@@ -10,7 +10,7 @@ import AboutUs from "../components/AboutUs";
 import Dashboard from "../components/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../pages/ErrorPage";
-import axios from "axios"
+import axios from "axios";
 import BeADonor from "../pages/BeADonor";
 
 export const router = createBrowserRouter([
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
-    errorElement: <ErrorPage></ErrorPage> ,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -31,11 +31,11 @@ export const router = createBrowserRouter([
       {
         path: "events",
         Component: Events,
-        loader: async() => {
+        loader: async () => {
           // fetch('/bloodRequestEvent.json').then(res => res.json())
-          const response = await axios.get('/bloodRequestEvent.json');
+          const response = await axios.get("/bloodRequestEvent.json");
           return response.data;
-        }
+        },
       },
       {
         path: "about-us",
@@ -43,19 +43,45 @@ export const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element:
+        element: (
           <PrivateRoute>
             <Dashboard />
-          </PrivateRoute>,
-        errorElement: <div className="p-10 text-red-500">Dashboard failed to load.</div>
+          </PrivateRoute>
+        ),
+        errorElement: (
+          <div className="p-10 text-red-500">Dashboard failed to load.</div>
+        ),
       },
       {
         path: "beadonor",
-        element:
+        element: (
           // <PrivateRoute>
           // </PrivateRoute>,
-            <BeADonor/>,
-        errorElement: <div className="p-10 text-red-500">Dashboard failed to load.</div>
+          <BeADonor />
+        ),
+        errorElement: (
+          <div className="p-10 text-red-500">Donor Page failed to load.</div>
+        ),
+        loader: async () => {
+          // Fetch all files in parallel for better speed
+          const [divRes, distRes, upzRes, uniRes] = await Promise.all([
+            axios.get("/divisions.json"),
+            axios.get("/districts.json"),
+            axios.get("/upazilas.json"),
+            axios.get("/unions.json"),
+          ]);
+
+          // Helper to clean the structure
+          const clean = (res) =>
+            res.data.find((item) => item.type === "table").data;
+
+          return {
+            divisions: clean(divRes),
+            districts: clean(distRes),
+            upazilas: clean(upzRes),
+            unions: clean(uniRes),
+          };
+        },
       },
     ],
   },
@@ -64,11 +90,11 @@ export const router = createBrowserRouter([
   // This is a "Pathless Route". It doesn't add anything to the URL,
   // but it wraps the children in AuthLayout.
   {
-    Component: AuthLayout, 
+    Component: AuthLayout,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "login",    // URL remains: /login
+        path: "login", // URL remains: /login
         Component: Login,
       },
       {
