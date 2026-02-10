@@ -22,6 +22,7 @@ import AllUsers from "../Dashboard/admin/AllUsers";
 import AllRequests from "../Dashboard/admin/AllRequests";
 import VolunteerHome from "../Dashboard/volunteer/VolunteerHome";
 import VolunteerRequests from "../Dashboard/volunteer/VolunteerRequests";
+import RoleRoute from "./RoleRoute";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -116,11 +117,19 @@ export const router = createBrowserRouter([
       // admin
       {
         path: "admin",
-        Component: AdminHome,
+        element: (
+          <RoleRoute allowedRoles={["admin"]}>
+            <AdminHome></AdminHome>
+          </RoleRoute>
+        ),
       },
       {
         path: "admin/users",
-        Component: AllUsers,
+        element: (
+          <RoleRoute allowedRoles={["admin"]}>
+            <AllUsers />
+          </RoleRoute>
+        ),
       },
       {
         path: "admin/requests",
@@ -130,7 +139,11 @@ export const router = createBrowserRouter([
       // volunteer
       {
         path: "volunteer",
-        Component: VolunteerHome,
+        element: (
+          <RoleRoute allowedRoles={["admin", "volunteer"]}>
+            <VolunteerHome />
+          </RoleRoute>
+        ),
       },
       {
         path: "volunteer/requests",

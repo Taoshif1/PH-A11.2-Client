@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import axios from "axios";
 
 import {
   createUserWithEmailAndPassword,
@@ -17,6 +18,7 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState(null); // For MongoDB data
   const [loading, setLoading] = useState(true);
 
   // Register
@@ -56,16 +58,33 @@ const AuthProvider = ({ children }) => {
 
   // Observer
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        try {
+          const token = await currentUser.getIdToken();
+          const res = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/users/me`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          );
+          setUserInfo(res.data);
+        } catch (err) {
+          console.error("Error fetching user role", err);
+        }
+      } else {
+        setUserInfo(null);
+      }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
   const authInfo = {
     user,
+    userInfo,
     loading,
     registerUser,
     loginUser,
