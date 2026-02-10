@@ -68,7 +68,7 @@ const Register = () => {
           status: "active",
         };
 
-        await axios.post("http://localhost:5000/api/users/register", userInfo, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, userInfo, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

@@ -27,7 +27,7 @@ const Login = () => {
       const token = await res.user.getIdToken();
 
       // 1. Fetch user role from your backend
-      const response = await axios.get("http://localhost:5000/api/users/me", {
+      const response = await axios.get("https://bloodapp2.vercel.app/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
