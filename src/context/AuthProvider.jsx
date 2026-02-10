@@ -38,10 +38,15 @@ const AuthProvider = ({ children }) => {
   };
 
   // Update Profile
-  const updateUserProfile = (profile) => {
-    return updateProfile(auth.currentUser, profile);
+  const updateUserProfile = (profile, name, photo) => {
+    return (
+      updateProfile(auth.currentUser, profile),
+      {
+        displayName: name,
+        photoURL: photo,
+      }
+    );
   };
-
   // Logout
   const logOut = async () => {
     setLoading(true);
@@ -70,9 +75,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={authInfo}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 

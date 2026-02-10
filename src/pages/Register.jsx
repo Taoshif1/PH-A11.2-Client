@@ -1,181 +1,157 @@
-import { use, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { AuthContext } from "../context/AuthContext";
-import { MdLogin } from "react-icons/md";
-import { FcGoogle } from "react-icons/fc";
-import { FaSignInAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import districtsData from "../../public/districts.json"
+import Swal from "sweetalert2";
+import { MdLogin } from "react-icons/md";
+import { FaSignInAlt } from "react-icons/fa";
 
-
-const districtList = districtsData.find(item => item.type === "table").data;
-
-console.log(districtList)
-
-// 2. Accessing fields
-districtList.forEach(district => {
-    console.log(`ID: ${district.id}, Name: ${district.name}, Bangla: ${district.bn_name}`);
-});
+// ImageBB API Key (Put this in your .env)
+const image_hosting_key = "a8eeb785eb2865d9ddb86c5f707ce65f";
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [name, setName] = useState("");
-  const { registerUser, googleSignIn } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth(); // Ensure updateUserProfile is in your hook
   const navigate = useNavigate();
-  // const { registerUser: registerUserContext } = use(AuthContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  // console.log("Inside Register -> ", registerUserContext);
+  // States for Location Data
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+
+  // Load JSON Data
+  useEffect(() => {
+    fetch("/districts.json").then(res => res.json()).then(data => setDistricts(data.find(i => i.type === "table").data));
+    fetch("/upazilas.json").then(res => res.json()).then(data => setUpazilas(data.find(i => i.type === "table").data));
+  }, []);
+
+  // Filter Upazilas when District changes
+  const selectedDistrictId = watch("district");
+  useEffect(() => {
+    if (selectedDistrictId) {
+      const filtered = upazilas.filter(u => u.district_id === selectedDistrictId);
+      setFilteredUpazilas(filtered);
+    }
+  }, [selectedDistrictId, upazilas]);
 
   const handleRegister = async (data) => {
     try {
-      const res = await registerUser(data.email, data.password);
-      console.log("Data inside registration -> ", res);
+      // 1. Upload Image to ImageBB
+      const imageFile = { image: data.avatar[0] };
+      const resImg = await axios.post(image_hosting_api, imageFile, {
+        headers: { "content-type": "multipart/form-data" }
+      });
 
-      // After Firebase success → Save in DB
-      const userInfo = {
-        uid: res.user.uid,
-        name: data.fullName,
-        email: data.email,
-        role: "donor",
-        status: "active",
-        bloodGroup: data.bloodGroup || "",
-        district: data.district || "",
-        upazila: data.upazila || "",
-      };
+      if (resImg.data.success) {
+        const photoURL = resImg.data.data.display_url;
 
-      await axios.post("/users", userInfo);
+        // 2. Register in Firebase
+        const result = await registerUser(data.email, data.password);
 
-      alert("Registration successful!");
-      navigate("/login");
+        // 3. Update Firebase Profile (Fixes displayName being null)
+        await updateUserProfile(data.fullName, photoURL);
+
+        const token = await result.user.getIdToken();
+
+        // 4. Save to MongoDB
+        const userInfo = {
+          uid: result.user.uid,
+          name: data.fullName,
+          email: data.email,
+          avatar: photoURL,
+          bloodGroup: data.bloodGroup,
+          district: districts.find(d => d.id === data.district)?.name,
+          upazila: upazilas.find(u => u.id === data.upazila)?.name,
+          role: "donor",
+          status: "active",
+        };
+
+        await axios.post("http://localhost:5000/api/users/register", userInfo, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        Swal.fire("Success", "Account created successfully!", "success");
+        navigate("/dashboard/donor");
+      }
     } catch (err) {
       console.error(err);
-      alert(err.message);
-    }
-  };
-
-  const handleGoogleSignup = async () => {
-    try {
-      const res = await googleSignIn();
-
-      const userInfo = {
-        uid: res.user.uid,
-        name: res.user.displayName,
-        email: res.user.email,
-        role: "donor",
-        status: "active",
-      };
-
-      await axios.post("/users", userInfo);
-
-      navigate("/");
-    } catch (err) {
-      console.error(err);
+      Swal.fire("Error", err.message, "error");
     }
   };
 
   return (
-    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 py-12 px-4">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gradient mb-2">Join Us!</h1>
-          <p className="text-gray-600">Create your account to get started</p>
-          <div className="flex justify-center ">
-            <p className="text-gray-500 mt-2 text-sm">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-purple-600 font-semibold hover:underline inline-flex items-center gap-1"
-              >
-                <MdLogin></MdLogin> Login
-              </Link>
-            </p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+      <div className="w-full max-w-2xl bg-white p-10 rounded-2xl shadow-xl border">
+        <h1 className="text-3xl font-bold text-center mb-6">Create Account</h1>
+        <form onSubmit={handleSubmit(handleRegister)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          {/* Name */}
+          <div className="form-control">
+            <label className="label">Full Name</label>
+            <input type="text" {...register("fullName", { required: true })} className="input input-bordered" />
           </div>
-        </div>
 
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit(handleRegister)}
-          className="bg-white p-8 rounded-2xl shadow-xl space-y-4 border border-gray-100"
-        >
-          {/* fullName */}
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="input input-bordered w-full"
-            {...register("fullName", { required: true })}
-            required
-          />
+          {/* Email */}
+          <div className="form-control">
+            <label className="label">Email</label>
+            <input type="email" {...register("email", { required: true })} className="input input-bordered" />
+          </div>
 
-          {/* email */}
-          <input
-            type="email"
-            placeholder="Email"
-            className={`input input-bordered w-full ${errors.email ? "input-error" : ""}`}
-            {...register("email", {
-              required: true,
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Please enter a valid email address",
-              },
-            })}
-            required
-          />
-          {/* Email Error Message Display */}
-          {errors.email && (
-            <p className="text-red-500 text-xs mt-1 ml-1">
-              {errors.email.message}
-            </p>
-          )}
+          {/* Avatar */}
+          <div className="form-control">
+            <label className="label">Avatar</label>
+            <input type="file" {...register("avatar", { required: true })} className="file-input file-input-bordered w-full" />
+          </div>
 
-          {/* password */}
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-bordered w-full"
-            {...register("password", {
-              required: true,
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
-              },
-              pattern: {
-                value: /^(?=.*[A-Z])(?=.*[0-9]).*$/,
-                message:
-                  "Must include at least one uppercase letter and one number",
-              },
-            })}
-            required
-          />
-          {/* Password Error Message Display */}
-          {errors.password && (
-            <p className="text-red-500 text-xs mt-1 ml-1">
-              {errors.password.message}
-            </p>
-          )}
+          {/* Blood Group */}
+          <div className="form-control">
+            <label className="label">Blood Group</label>
+            <select {...register("bloodGroup", { required: true })} className="select select-bordered">
+              <option value="">Select</option>
+              {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(bg => <option key={bg} value={bg}>{bg}</option>)}
+            </select>
+          </div>
 
-          <button type="submit" className="btn btn-error w-full text-white">
-            <FaSignInAlt />
-            Sign Up
-          </button>
+          {/* District */}
+          <div className="form-control">
+            <label className="label">District</label>
+            <select {...register("district", { required: true })} className="select select-bordered">
+              <option value="">Select District</option>
+              {districts.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+            </select>
+          </div>
 
-          <button
-            type="button"
-            onClick={handleGoogleSignup}
-            className="btn btn-outline w-full"
-          >
-            <FcGoogle className="text-2xl mr-2" />
-            Sign Up with Google
-          </button>
+          {/* Upazila */}
+          <div className="form-control">
+            <label className="label">Upazila</label>
+            <select {...register("upazila", { required: true })} className="select select-bordered" disabled={!selectedDistrictId}>
+              <option value="">Select Upazila</option>
+              {filteredUpazilas.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
+            </select>
+          </div>
+
+          {/* Password */}
+          <div className="form-control">
+            <label className="label">Password</label>
+            <input type="password" {...register("password", { required: true, minLength: 6 })} className="input input-bordered" />
+          </div>
+
+          {/* Confirm Password */}
+          <div className="form-control">
+            <label className="label">Confirm Password</label>
+            <input type="password" {...register("confirmPassword", { 
+              validate: value => value === watch('password') || "Passwords do not match" 
+            })} className="input input-bordered" />
+            {errors.confirmPassword && <span className="text-red-500 text-xs">{errors.confirmPassword.message}</span>}
+          </div>
+
+          <div className="md:col-span-2 mt-4">
+            <button type="submit" className="btn btn-primary w-full"><FaSignInAlt /> Register</button>
+          </div>
         </form>
+        <p className="text-center mt-4">Already have an account? <Link to="/login" className="text-blue-600 font-bold">Login</Link></p>
       </div>
     </div>
   );

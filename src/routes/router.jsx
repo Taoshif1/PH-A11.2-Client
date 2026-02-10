@@ -7,11 +7,21 @@ import Register from "../pages/Register";
 import FindDonors from "../components/FindDonors";
 import Events from "../components/Events";
 import AboutUs from "../components/AboutUs";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../pages/DashboardHome";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../pages/ErrorPage";
 import axios from "axios";
 import BeADonor from "../pages/BeADonor";
+import DashBoardLayout from "../layouts/DashBoardLayout";
+import Profile from "../Dashboard/common/Profile";
+import DonorHome from "../Dashboard/donor/DonorHome";
+import MyRequests from "../Dashboard/donor/MyRequests";
+import CreateRequest from "../Dashboard/donor/CreateRequest";
+import AdminHome from "../Dashboard/admin/AdminHome";
+import AllUsers from "../Dashboard/admin/AllUsers";
+import AllRequests from "../Dashboard/admin/AllRequests";
+import VolunteerHome from "../Dashboard/volunteer/VolunteerHome";
+import VolunteerRequests from "../Dashboard/volunteer/VolunteerRequests";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -40,17 +50,6 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         Component: AboutUs,
-      },
-      {
-        path: "dashboard",
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
-        errorElement: (
-          <div className="p-10 text-red-500">Dashboard failed to load.</div>
-        ),
       },
       {
         path: "beadonor",
@@ -82,6 +81,60 @@ export const router = createBrowserRouter([
             unions: clean(uniRes),
           };
         },
+      },
+    ],
+  },
+
+  // --- DASHBOARD SECTION (Private & Role-Based) ---
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      // common
+      {
+        path: "profile",
+        Component: Profile,
+      },
+      //donor
+      {
+        path: "donor",
+        Component: DonorHome,
+      },
+      {
+        path: "donor/requests",
+        Component: MyRequests,
+      },
+      {
+        path: "donor/create",
+        Component: CreateRequest,
+      },
+
+      // admin
+      {
+        path: "admin",
+        Component: AdminHome,
+      },
+      {
+        path: "admin/users",
+        Component: AllUsers,
+      },
+      {
+        path: "admin/requests",
+        Component: AllRequests,
+      },
+
+      // volunteer
+      {
+        path: "volunteer",
+        Component: VolunteerHome,
+      },
+      {
+        path: "volunteer/requests",
+        Component: VolunteerRequests,
       },
     ],
   },
