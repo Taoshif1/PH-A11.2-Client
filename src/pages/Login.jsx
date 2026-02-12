@@ -4,7 +4,7 @@ import { TiUserAdd } from "react-icons/ti";
 import { FcGoogle } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2"; // Recommended for better alerts
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const Login = () => {
@@ -18,26 +18,28 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  // Redirect to wherever they came from, or the default dashboard
+  // Redirect to wherever they came from or the default dashboard
   const from = location.state?.from?.pathname || "/dashboard";
 
   const handleLogin = async (data) => {
     try {
+
       const res = await loginUser(data.email, data.password);
       const token = await res.user.getIdToken();
+      localStorage.setItem("access-token", token);
 
-      // 1. Fetch user role from your backend
+      // 1. Fetch user role from backend
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const userRole = response.data.role; // 'donor', 'admin', or 'volunteer'
+      const userRole = response.data.role; // 'donor', 'admin' or 'volunteer'
 
       Swal.fire({ icon: "success", title: "Login successful", timer: 1000 });
 
       // 2. Navigate based on role
-      // This will match your router paths like /dashboard/donor, /dashboard/admin, etc.
-      navigate(`/dashboard/${userRole}`, { replace: true });
+      // This will match router paths 
+      navigate(`/dashboard/${userRole}/home`, { replace: true });
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -50,7 +52,9 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await googleSignIn();
+      const res = await googleSignIn();
+      const token = await res.user.getIdToken();
+      localStorage.setItem("access-token", token);
 
       Swal.fire({
         icon: "success",
@@ -62,6 +66,7 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.error(err);
+      localStorage.removeItem("access-token");
       Swal.fire({
         icon: "error",
         title: "Google Login Failed",

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router';
+import LifeStreamLoader from '../components/LifeStreamLoader';
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -11,7 +12,7 @@ const PrivateRoute = ({ children }) => {
     if(loading){
         return (
             <div className="flex justify-center items-center h-screen">
-                <span className="loading loading-spinner loading-lg"></span>
+                <LifeStreamLoader></LifeStreamLoader>
             </div>
         );
     }

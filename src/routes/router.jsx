@@ -7,7 +7,7 @@ import Register from "../pages/Register";
 import FindDonors from "../components/FindDonors";
 import Events from "../components/Events";
 import AboutUs from "../components/AboutUs";
-import Dashboard from "../pages/DashboardHome";
+// import Dashboard from "../pages/DashboardHome";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../pages/ErrorPage";
 import axios from "axios";
@@ -23,6 +23,7 @@ import AllRequests from "../Dashboard/admin/AllRequests";
 import VolunteerHome from "../Dashboard/volunteer/VolunteerHome";
 import VolunteerRequests from "../Dashboard/volunteer/VolunteerRequests";
 import RoleRoute from "./RoleRoute";
+import LifeStreamLoader from "../components/LifeStreamLoader";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -59,9 +60,7 @@ export const router = createBrowserRouter([
           // </PrivateRoute>,
           <BeADonor />
         ),
-        errorElement: (
-          <div className="p-10 text-red-500">Donor Page failed to load.</div>
-        ),
+        errorElement: <LifeStreamLoader></LifeStreamLoader> ,
         loader: async () => {
           // Fetch all files in parallel for better speed
           const [divRes, distRes, upzRes, uniRes] = await Promise.all([
@@ -102,8 +101,10 @@ export const router = createBrowserRouter([
       },
       //donor
       {
-        path: "donor",
-        Component: DonorHome,
+        path: "donor/home",
+        element: <RoleRoute allowedRoles={["donor"]}>
+          <DonorHome></DonorHome>
+        </RoleRoute>
       },
       {
         path: "donor/requests",

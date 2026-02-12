@@ -12,7 +12,7 @@ const image_hosting_key = "a8eeb785eb2865d9ddb86c5f707ce65f";
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
-  const { registerUser, updateUserProfile, logOut } = useAuth(); // Ensure updateUserProfile is in your hook
+  const { registerUser, updateUserProfile, logOut } = useAuth(); 
   const navigate = useNavigate();
   const {
     register,

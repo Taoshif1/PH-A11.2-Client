@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FaEdit, FaSave, FaTimes } from "react-icons/fa";
+import LifeStreamLoader from "../../components/LifeStreamLoader";
 
 const Profile = () => {
   const { userInfo, loading } = useAuth();
@@ -13,7 +14,7 @@ const Profile = () => {
     defaultValues: userInfo, // Loads existing DB data into the form
   });
 
-  if (loading) return <span className="loading loading-bars loading-lg"></span>;
+  if (loading) return <LifeStreamLoader></LifeStreamLoader>;
 
   const onSubmit = async (data) => {
     try {
@@ -37,7 +38,7 @@ const Profile = () => {
       if (response.data.success) {
         Swal.fire("Success", "Profile updated successfully!", "success");
         setIsEditable(false);
-        // Note: You might need to trigger a re-fetch in AuthContext to see changes
+        // Note: might need to trigger a re-fetch in AuthContext to see changes
       }
     } catch (err) {
       Swal.fire("Error", "Could not update profile", "error");

@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import LifeStreamLoader from "../components/LifeStreamLoader";
 
 const RoleRoute = ({ children, allowedRoles }) => {
   const { user, userInfo, loading } = useAuth();
@@ -7,7 +8,7 @@ const RoleRoute = ({ children, allowedRoles }) => {
 
   // 1. Wait for Firebase and MongoDB user data to load
   if (loading || !userInfo) {
-    return <div className="min-h-screen flex items-center justify-center underline decoration-pink-500">Loading Role...</div>;
+    return <div className="min-h-screen flex items-center justify-center underline decoration-pink-500"><LifeStreamLoader></LifeStreamLoader> </div>;
   }
 
   // 2. Check if the user's role is in the allowed list

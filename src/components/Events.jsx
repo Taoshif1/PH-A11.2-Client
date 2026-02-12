@@ -16,7 +16,7 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const Events = () => {
-    // 1. Access the data from the loader
+    // Access the data from the loader
     const centers = useLoaderData();
 
     return (
@@ -26,7 +26,7 @@ const Events = () => {
                 <p className="text-gray-600">Explore {centers.length} active requests across Bangladesh</p>
             </div>
 
-            {/* 2. Render the Map */}
+            {/* Render the Map */}
             <div className="h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
                 <MapContainer center={[23.6850, 90.3563]} zoom={7} className="h-full w-full">
                     <TileLayer
