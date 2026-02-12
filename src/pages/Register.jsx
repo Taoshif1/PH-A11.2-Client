@@ -91,7 +91,7 @@ const Register = () => {
         await logOut();
 
         Swal.fire("Success", "Account created successfully!", "success");
-        navigate("/dashboard/donor");
+        navigate("/dashboard/donor/home");
       }
     } catch (err) {
       console.error(err);

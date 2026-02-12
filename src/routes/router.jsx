@@ -24,6 +24,7 @@ import VolunteerHome from "../Dashboard/volunteer/VolunteerHome";
 import VolunteerRequests from "../Dashboard/volunteer/VolunteerRequests";
 import RoleRoute from "./RoleRoute";
 import LifeStreamLoader from "../components/LifeStreamLoader";
+import EditRequest from "../Dashboard/donor/EditRequest";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: "donor/create",
         Component: CreateRequest,
+      },
+      {
+        path: 'donor/edit/:id',
+        element: <EditRequest></EditRequest>
       },
 
       // admin
