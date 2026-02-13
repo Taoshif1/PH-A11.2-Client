@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaUser,
   FaHome,
@@ -10,6 +10,7 @@ import {
   FaTasks,
   FaChevronLeft,
   FaChevronRight,
+  FaHandHoldingHeart,
 } from "react-icons/fa";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -17,6 +18,7 @@ const Sidebar = () => {
   const { userInfo } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const role = userInfo?.role;
+  console.log("Role: ",role)
 
   return (
     <motion.div
@@ -67,6 +69,7 @@ const Sidebar = () => {
           collapsed={isCollapsed}
         />
 
+        {/* DONOR ROUTES */}
         {role === "donor" && (
           <>
             <NavItem
@@ -90,24 +93,43 @@ const Sidebar = () => {
           </>
         )}
 
+        {/* ADMIN ROUTES */}
         {role === "admin" && (
           <>
             <NavItem
               to="/dashboard/admin/home"
               icon={<FaHome />}
-              label="Stats"
+              label="Admin Stats"
               collapsed={isCollapsed}
             />
             <NavItem
               to="/dashboard/admin/users"
               icon={<FaUsers />}
-              label="Users"
+              label="Manage Users"
               collapsed={isCollapsed}
             />
             <NavItem
               to="/dashboard/admin/requests"
               icon={<FaTasks />}
-              label="All Requests"
+              label="Global Requests"
+              collapsed={isCollapsed}
+            />
+          </>
+        )}
+
+        {/* VOLUNTEER ROUTES */}
+        {role === "volunteer" && (
+          <>
+            <NavItem
+              to="/dashboard/volunteer/home"
+              icon={<FaHome />}
+              label="Volunteer Home"
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              to="/dashboard/volunteer/requests"
+              icon={<FaHandHoldingHeart />}
+              label="Manage Blood"
               collapsed={isCollapsed}
             />
           </>
@@ -127,36 +149,31 @@ const Sidebar = () => {
   );
 };
 
-// Helper Component for cleaner code
 const NavItem = ({ to, icon, label, collapsed }) => {
   return (
     <NavLink
       to={to}
-      end={
-        to.endsWith("dashboard") ||
-        to.endsWith("admin") ||
-        to.endsWith("volunteer")
-      }
+      end
       className={({ isActive }) =>
-        `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
+        `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group relative ${
           isActive
             ? "bg-error text-white shadow-md"
             : "hover:bg-error/5 text-base-content/60"
         } ${collapsed ? "justify-center" : ""}`
       }
     >
-      <span className="text-lg min-w-[20px]">{icon}</span>
+      <span className="text-lg">{icon}</span>
       {!collapsed && (
         <motion.span
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          className="font-medium whitespace-nowrap"
+          className="font-medium"
         >
           {label}
         </motion.span>
       )}
       {collapsed && (
-        <div className="absolute left-20 bg-neutral text-neutral-content px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
+        <div className="absolute left-16 bg-neutral text-neutral-content px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 whitespace-nowrap">
           {label}
         </div>
       )}

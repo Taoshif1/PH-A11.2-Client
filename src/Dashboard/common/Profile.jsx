@@ -11,14 +11,13 @@ const Profile = () => {
   const [isEditable, setIsEditable] = useState(false);
 
   const { register, handleSubmit, reset } = useForm({
-    defaultValues: userInfo, // Loads existing DB data into the form
+    defaultValues: userInfo, 
   });
 
   if (loading) return <LifeStreamLoader></LifeStreamLoader>;
 
   const onSubmit = async (data) => {
     try {
-      // We only send the fields allowed to be updated
       const updatedData = {
         name: data.name,
         bloodGroup: data.bloodGroup,
@@ -38,7 +37,6 @@ const Profile = () => {
       if (response.data.success) {
         Swal.fire("Success", "Profile updated successfully!", "success");
         setIsEditable(false);
-        // Note: might need to trigger a re-fetch in AuthContext to see changes
       }
     } catch (err) {
       Swal.fire("Error", "Could not update profile", "error");

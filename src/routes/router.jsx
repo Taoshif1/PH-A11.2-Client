@@ -11,7 +11,7 @@ import AboutUs from "../components/AboutUs";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../pages/ErrorPage";
 import axios from "axios";
-import BeADonor from "../pages/BeADonor";
+import RegisterVolunteer from "../pages/RegisterVolunteer";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import Profile from "../Dashboard/common/Profile";
 import DonorHome from "../Dashboard/donor/DonorHome";
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
         element: (
           // <PrivateRoute>
           // </PrivateRoute>,
-          <BeADonor />
+          <RegisterVolunteer />
         ),
         errorElement: <LifeStreamLoader></LifeStreamLoader>,
         loader: async () => {
@@ -83,6 +83,7 @@ export const router = createBrowserRouter([
             unions: clean(uniRes),
           };
         },
+        hydrateFallbackElement: <LifeStreamLoader></LifeStreamLoader>
       },
     ],
   },
@@ -155,10 +156,10 @@ export const router = createBrowserRouter([
 
       // volunteer
       {
-        path: "volunteer",
+        path: "volunteer/home",
         element: (
-          <RoleRoute allowedRoles={["admin", "volunteer"]}>
-            <VolunteerHome />
+          <RoleRoute allowedRoles={["volunteer"]}>
+            <VolunteerRequests />
           </RoleRoute>
         ),
       },

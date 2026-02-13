@@ -23,29 +23,35 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     try {
-
       const res = await loginUser(data.email, data.password);
       const token = await res.user.getIdToken();
       localStorage.setItem("access-token", token);
 
-      // 1. Fetch user role from backend
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/users/me`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
 
-      const userRole = response.data.role; // 'donor', 'admin' or 'volunteer'
+      const userRole = response.data.role;
+
+      if (!userRole) {
+        throw new Error(
+          "User role not found in database. Please contact admin.",
+        );
+      }
 
       Swal.fire({ icon: "success", title: "Login successful", timer: 1000 });
 
-      // 2. Navigate based on role
-      // This will match router paths 
-      navigate(`/dashboard/${userRole}/home`, { replace: true });
+      // Navigate based on the exact role string from DB
+      navigate(`/dashboard/${userRole.toLowerCase()}/home`, { replace: true });
     } catch (err) {
-      console.error(err);
+      console.error("Login Error Details:", err.response?.data || err.message);
       Swal.fire({
         icon: "error",
         title: "Login Failed",
-        text: err.message,
+        text: err.response?.data?.message || err.message,
       });
     }
   };

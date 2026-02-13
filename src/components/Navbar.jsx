@@ -4,7 +4,7 @@ import { IoMdHome } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md";
-import { BiDonateHeart } from "react-icons/bi";
+import { IoMdPersonAdd } from "react-icons/io";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useState, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
@@ -122,8 +122,8 @@ const Navbar = () => {
             `btn ${isActive ? "btn-disabled" : "btn-error text-white"} flex items-center gap-2 shadow-sm transition-all hover:scale-105`
           }
         >
-          <BiDonateHeart size={20} />
-          Be A Donor
+          <IoMdPersonAdd size={20} />
+          Join as Volunteer
         </NavLink>
 
       </div>
