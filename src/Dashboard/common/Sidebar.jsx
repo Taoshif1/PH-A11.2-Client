@@ -93,9 +93,9 @@ const Sidebar = () => {
         {role === "admin" && (
           <>
             <NavItem
-              to="/dashboard/admin"
+              to="/dashboard/admin/home"
               icon={<FaHome />}
-              label="Admin Stats"
+              label="Stats"
               collapsed={isCollapsed}
             />
             <NavItem

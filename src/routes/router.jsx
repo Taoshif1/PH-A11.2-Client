@@ -25,6 +25,7 @@ import VolunteerRequests from "../Dashboard/volunteer/VolunteerRequests";
 import RoleRoute from "./RoleRoute";
 import LifeStreamLoader from "../components/LifeStreamLoader";
 import EditRequest from "../Dashboard/donor/EditRequest";
+import ViewRequest from "../Dashboard/donor/ViewRequest";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -61,7 +62,7 @@ export const router = createBrowserRouter([
           // </PrivateRoute>,
           <BeADonor />
         ),
-        errorElement: <LifeStreamLoader></LifeStreamLoader> ,
+        errorElement: <LifeStreamLoader></LifeStreamLoader>,
         loader: async () => {
           // Fetch all files in parallel for better speed
           const [divRes, distRes, upzRes, uniRes] = await Promise.all([
@@ -103,9 +104,11 @@ export const router = createBrowserRouter([
       //donor
       {
         path: "donor/home",
-        element: <RoleRoute allowedRoles={["donor"]}>
-          <DonorHome></DonorHome>
-        </RoleRoute>
+        element: (
+          <RoleRoute allowedRoles={["donor"]}>
+            <DonorHome></DonorHome>
+          </RoleRoute>
+        ),
       },
       {
         path: "donor/requests",
@@ -116,13 +119,17 @@ export const router = createBrowserRouter([
         Component: CreateRequest,
       },
       {
-        path: 'donor/edit/:id',
-        element: <EditRequest></EditRequest>
+        path: "donor/edit/:id",
+        element: <EditRequest></EditRequest>,
+      },
+      {
+        path: "donor/view/:id",
+        element: <ViewRequest></ViewRequest>,
       },
 
       // admin
       {
-        path: "admin",
+        path: "admin/home",
         element: (
           <RoleRoute allowedRoles={["admin"]}>
             <AdminHome></AdminHome>
@@ -139,7 +146,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "admin/requests",
-        Component: AllRequests,
+        element: (
+          <RoleRoute allowedRoles={["admin"]}>
+            <AllRequests />
+          </RoleRoute>
+        ),
       },
 
       // volunteer

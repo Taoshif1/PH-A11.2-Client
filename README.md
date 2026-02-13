@@ -7,6 +7,7 @@ client
 ├─ package.json
 ├─ public
 │  ├─ bloodRequestEvent.json
+│  ├─ districts.json
 │  ├─ divisions.json
 │  ├─ unions.json
 │  ├─ upazilas.json

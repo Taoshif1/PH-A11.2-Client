@@ -184,7 +184,7 @@ const MyRequests = () => {
                         <FaTrashAlt size={16} />
                       </button>
                       <Link
-                        to={`/donation-details/${req._id}`}
+                        to={`/dashboard/donor/view/${req._id}`}
                         className="btn btn-ghost btn-xs text-primary"
                       >
                         <FaEye size={16} />
