@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
         Component: FindDonors,
       },
       {
+        path: "/request-details/:id",
+        element: <ViewRequest />,
+      },
+      {
         path: "events",
         Component: Events,
         loader: async () => {
@@ -83,7 +87,7 @@ export const router = createBrowserRouter([
             unions: clean(uniRes),
           };
         },
-        hydrateFallbackElement: <LifeStreamLoader></LifeStreamLoader>
+        hydrateFallbackElement: <LifeStreamLoader></LifeStreamLoader>,
       },
     ],
   },
@@ -159,7 +163,7 @@ export const router = createBrowserRouter([
         path: "volunteer/home",
         element: (
           <RoleRoute allowedRoles={["volunteer"]}>
-            <VolunteerRequests />
+            <VolunteerHome />
           </RoleRoute>
         ),
       },

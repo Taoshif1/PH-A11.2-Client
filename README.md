@@ -52,7 +52,8 @@ client
 │  │  │  ├─ CreateRequest.jsx
 │  │  │  ├─ DonorHome.jsx
 │  │  │  ├─ EditRequest.jsx
-│  │  │  └─ MyRequests.jsx
+│  │  │  ├─ MyRequests.jsx
+│  │  │  └─ ViewRequest.jsx
 │  │  └─ volunteer
 │  │     ├─ VolunteerHome.jsx
 │  │     └─ VolunteerRequests.jsx
@@ -68,12 +69,12 @@ client
 │  │  └─ MainLayout.jsx
 │  ├─ main.jsx
 │  ├─ pages
-│  │  ├─ BeADonor.jsx
 │  │  ├─ DashboardHome.jsx
 │  │  ├─ ErrorPage.jsx
 │  │  ├─ Home.jsx
 │  │  ├─ Login.jsx
-│  │  └─ Register.jsx
+│  │  ├─ Register.jsx
+│  │  └─ RegisterVolunteer.jsx
 │  └─ routes
 │     ├─ PrivateRoute.jsx
 │     ├─ RoleRoute.jsx

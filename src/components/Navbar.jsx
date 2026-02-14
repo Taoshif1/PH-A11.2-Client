@@ -29,7 +29,7 @@ const Navbar = () => {
           to="/find-donors"
           className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
         >
-          <MdFindInPage /> Find Donors
+          <MdFindInPage /> Find Blood
         </NavLink>
       </li>
       <li>
