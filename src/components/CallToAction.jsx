@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaHandsHelping, FaHeartbeat, FaTint } from "react-icons/fa";
+import { Link } from "react-router";
 
 const CallToAction = () => {
   return (
@@ -36,12 +37,12 @@ const CallToAction = () => {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="flex justify-center flex-wrap gap-4"
         >
-          <button className="btn btn-outline btn-lg flex items-center gap-2 border-white hover:bg-white hover:text-red-600 transition-colors duration-300">
+          <Link to="/register" className="btn btn-outline btn-lg flex items-center gap-2 border-white hover:bg-white hover:text-red-600 transition-colors duration-300">
             <FaHeartbeat /> Become a Donor
-          </button>
-          <button className="btn btn-gradient btn-lg flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black transition-colors duration-300">
+          </Link>
+          <Link to="/find-donors" className="btn btn-gradient btn-lg flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black transition-colors duration-300">
             <FaTint /> Request Blood
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

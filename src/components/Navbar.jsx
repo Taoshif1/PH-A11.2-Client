@@ -14,7 +14,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useAuth();
 
-  // Define links in an array for cleaner mapping and to avoid repetition
   const navLinks = [
     { to: "/", label: "Home", icon: <IoMdHome /> },
     { to: "/find-donors", label: "Donate Blood", icon: <MdFindInPage /> },
@@ -134,7 +133,7 @@ const Navbar = () => {
 
         {/* Action Button */}
         <Link
-          to="/register-volunteer"
+          to="/beadonor"
           className="hidden sm:flex btn btn-outline btn-error btn-sm lg:btn-md rounded-full px-6 hover:scale-105 transition-all"
         >
           <IoMdPersonAdd size={18} />
@@ -158,7 +157,7 @@ const Navbar = () => {
           {!user && (
             <li>
               <Link
-                to="/register-volunteer"
+                to="/beadonor"
                 className="flex items-center gap-2 p-2 text-error"
               >
                 <IoMdPersonAdd /> Join as Volunteer

@@ -64,6 +64,8 @@ const RegisterVolunteer = () => {
 
       await updateUserProfile(data.name, "");
 
+      const token = await result.user.getIdToken();
+
       const volunteerInfo = {
         uid: result.user.uid,
         name: data.name,
@@ -82,6 +84,7 @@ const RegisterVolunteer = () => {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/api/users/register-volunteer`,
         volunteerInfo,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       Swal.fire(
