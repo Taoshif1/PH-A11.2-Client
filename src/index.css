@@ -1,9 +1,24 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
-   themes: light --default;
- }
+  themes: light --default;
+}
 
-
+@layer components {
   .active {
-    @apply bg-red-500 hover:bg-red-700 text-white font-semibold scale-105 transition;
+    @apply bg-error text-white font-bold scale-105 shadow-lg shadow-error/30 transition-all duration-300;
   }
+}
+
+/* Custom Scrollbar for a cleaner UI */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-error/30 rounded-full hover:bg-error/50 transition-colors;
+}

@@ -62,7 +62,7 @@ const CheckoutForm = ({ price, onSuccess }) => {
     } else {
       if (paymentIntent.status === "succeeded") {
         const paymentData = {
-          userName: user.displayName || user.email.split('@')[0] || "Anonymous Donor",
+          userName: user.displayName,
           userEmail: user.email,
           amount: price,
           transactionId: paymentIntent.id,
@@ -112,12 +112,13 @@ const Funding = () => {
   const [funds, setFunds] = useState([]);
   const axiosSecure = useAxiosSecure();
 
-  const fetchFunds = async () => {
+const fetchFunds = async () => {
     try {
       const res = await axiosSecure.get("/api/payments/funds");
-      setFunds(res.data);
+      setFunds(Array.isArray(res.data.result) ? res.data.result : []);
     } catch (err) {
       console.error("Fetch Funds Error:", err);
+      setFunds([]); 
     }
   };
 

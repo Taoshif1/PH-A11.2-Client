@@ -27,6 +27,7 @@ client
 │  │  └─ react.svg
 │  ├─ components
 │  │  ├─ AboutUs.jsx
+│  │  ├─ BloodTicker.jsx
 │  │  ├─ CallToAction.jsx
 │  │  ├─ Events.jsx
 │  │  ├─ FindDonors.jsx
@@ -71,6 +72,7 @@ client
 │  ├─ pages
 │  │  ├─ DashboardHome.jsx
 │  │  ├─ ErrorPage.jsx
+│  │  ├─ Funding.jsx
 │  │  ├─ Home.jsx
 │  │  ├─ Login.jsx
 │  │  ├─ Register.jsx
