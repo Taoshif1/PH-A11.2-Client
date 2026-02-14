@@ -62,13 +62,27 @@ const VolunteerRequests = () => {
           </thead>
           <tbody>
             {requests.map((req) => (
-              <tr key={req._id}>
-                <td>{req.recipientName}</td>
-                <td>
-                  {req.upazila}, {req.district}
+              <tr key={req._id} className="hover:bg-gray-50 transition-colors">
+                <td className="font-bold">{req.recipientName}</td>
+                <td className="text-sm">
+                  {/* Updated to match bloodRequests keys */}
+                  <span className="block font-medium">
+                    {req.recipientDistrict}
+                  </span>
+                  <span className="text-gray-400">{req.recipientUpazila}</span>
                 </td>
                 <td>
-                  <span className="badge badge-outline capitalize">
+                  <span
+                    className={`badge badge-sm ${
+                      req.status === "pending"
+                        ? "badge-warning"
+                        : req.status === "inprogress"
+                          ? "badge-info"
+                          : req.status === "done"
+                            ? "badge-success text-white"
+                            : "badge-ghost"
+                    }`}
+                  >
                     {req.status}
                   </span>
                 </td>
