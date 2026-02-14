@@ -21,8 +21,9 @@ const ViewRequest = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const url = `${import.meta.env.VITE_API_URL}/api/requests/${id}`;
     axios
-      .get(`http://localhost:5000/api/requests/${id}`)
+      .get(url)
       .then((res) => {
         setRequest(res.data);
         setLoading(false);
