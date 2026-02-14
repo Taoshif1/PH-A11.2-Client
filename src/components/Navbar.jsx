@@ -3,7 +3,9 @@ import logo from "../assets/logo.png";
 import { IoMdHome } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md";
+import { MdFindInPage, MdEvent, MdBloodtype, MdLogin } from "react-icons/md"
+import { SiCodestream } from "react-icons/si";
+import { RiRefund2Fill } from "react-icons/ri";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useState, useContext } from "react";
@@ -29,7 +31,23 @@ const Navbar = () => {
           to="/find-donors"
           className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
         >
-          <MdFindInPage /> Find Blood
+          <MdFindInPage /> Donate Blood
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <TbLayoutDashboardFilled /> DashBoard
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/funding"
+          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
+        >
+          <RiRefund2Fill /> Funding
         </NavLink>
       </li>
       <li>
@@ -45,15 +63,7 @@ const Navbar = () => {
           to="/about-us"
           className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
         >
-          <MdBloodtype /> About Us
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
-        >
-          <TbLayoutDashboardFilled /> DashBoard
+          <SiCodestream /> About Us
         </NavLink>
       </li>
 

@@ -75,20 +75,23 @@ const ViewRequest = () => {
         const donationInfo = {
           donorName: user.displayName,
           donorEmail: user.email,
-          status: "inprogress", // Change status from pending
-          donorNote,
+          donorNote: donorNote,
         };
 
-        // Calling backend to update the request
         await axios.patch(
-          `http://localhost:5000/api/donation-requests/${request._id}`,
+          `http://localhost:5000/api/donation-requests/donate/${id}`,
           donationInfo,
         );
 
-        Swal.fire("Thank You!", "The requester has been notified.", "success");
+        Swal.fire(
+          "Success!",
+          "You have committed to this donation.",
+          "success",
+        );
         navigate("/dashboard/donor/home");
       } catch (err) {
-        Swal.fire("Error", "Could not complete the request.", "error");
+        console.error(err);
+        Swal.fire("Error", "Something went wrong.", "error");
       }
     }
   };

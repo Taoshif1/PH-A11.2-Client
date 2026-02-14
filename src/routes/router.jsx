@@ -26,6 +26,7 @@ import RoleRoute from "./RoleRoute";
 import LifeStreamLoader from "../components/LifeStreamLoader";
 import EditRequest from "../Dashboard/donor/EditRequest";
 import ViewRequest from "../Dashboard/donor/ViewRequest";
+import Funding from "../pages/Funding";
 
 export const router = createBrowserRouter([
   // --- MAIN SITE SECTION ---
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "/request-details/:id",
         element: <ViewRequest />,
+      },
+      {
+        path: "funding",
+        element: <Funding />,
       },
       {
         path: "events",
