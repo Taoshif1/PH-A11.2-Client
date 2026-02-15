@@ -122,13 +122,6 @@ VITE_API_URL=[https://bloodapp2.vercel.app](https://bloodapp2.vercel.app)
 
 For testing purposes, you may use the following accounts:
 
-Role,Email,Password
-Admin,Admin@gmail.com,Admin12
-Volunteer,moon12@gmail.com,Tasu12
-Donor,Donor@gmail.com,Donor12
-
-write like this ->
-
 | Role      | Email            | Password |
 |-----------|------------------|----------|
 | Admin     | Admin@gmail.com  | Admin12  |
