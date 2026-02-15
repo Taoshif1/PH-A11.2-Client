@@ -62,7 +62,7 @@ const FindDonors = () => {
     try {
       const { bloodGroup, district, upazila } = searchParams;
       const res = await axios.get(
-        `http://localhost:5000/api/users/donors/search?bloodGroup=${encodeURIComponent(bloodGroup)}&district=${district}&upazila=${upazila}`,
+        `${import.meta.env.VITE_API_URL}/api/users/donors/search?bloodGroup=${encodeURIComponent(bloodGroup)}&district=${district}&upazila=${upazila}`,
       );
       setRequests(res.data);
     } catch (error) {

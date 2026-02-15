@@ -80,9 +80,9 @@ const ViewRequest = () => {
         };
 
         await axios.patch(
-          `http://localhost:5000/api/donation-requests/donate/${id}`,
-          donationInfo,
-        );
+        `${import.meta.env.VITE_API_URL}/api/donation-requests/donate/${id}`,
+        donationInfo
+      );
 
         Swal.fire(
           "Success!",

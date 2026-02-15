@@ -72,7 +72,7 @@ const Profile = () => {
         <h2 className="text-2xl font-bold text-gray-800">My Profile</h2>
         {!isEditable ? (
           <button
-            type="button" // Always specify type="button" to prevent accidental submits
+            type="button" 
             onClick={() => setIsEditable(true)}
             className="btn btn-primary btn-sm gap-2"
           >
@@ -83,7 +83,7 @@ const Profile = () => {
             type="button"
             onClick={() => {
               setIsEditable(false);
-              reset(userInfo); // Reset to original data
+              reset(userInfo); 
             }}
             className="btn btn-ghost btn-sm text-red-500"
           >
