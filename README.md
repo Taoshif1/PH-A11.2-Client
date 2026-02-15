@@ -1,6 +1,6 @@
-# 🩸 LifeStream | Frontend Client
+# 🩸 LifeStream Frontend 
 
-The user interface for the LifeStream blood donation platform. A responsive, high-performance Single Page Application (SPA) built with React and Vite, featuring a comprehensive dashboard for Donors, Volunteers, and Admins.
+The user interface for the LifeStream blood donation platform. A responsive, high performance Single Page Application (SPA) built with React & Vite, featuring a comprehensive role based dashboard access for Donors, Volunteers & Admins.
 
 ## 🚀 Live Application
 
@@ -10,7 +10,7 @@ The user interface for the LifeStream blood donation platform. A responsive, hig
 
 - **Framework:** React.js (Vite)
 - **Styling:** Tailwind CSS & DaisyUI
-- **State Management:** React Context API (AuthContext)
+- **State Management:** React Context API
 - **Routing:** React Router v7
 - **Icons:** React Icons
 - **Data Fetching:** Axios
@@ -25,7 +25,7 @@ client
 ├─ index.html
 ├─ package-lock.json
 ├─ package.json                     
-├─ public                           # Static assets & Local JSON data (Districts/Upazilas)
+├─ public                           # Static assets & Local JSON data
 │ ├─ bloodRequestEvent.json
 │ ├─ districts.json
 │ ├─ divisions.json
@@ -36,7 +36,7 @@ client
 ├─ src
 │ ├─ App.css
 │ ├─ App.jsx
-│ ├─ assets                         # Images and brand logos
+│ ├─ assets                         # Images & brand logos
 │ │ ├─ logo.png
 │ │ ├─ lsh1.png
 │ │ ├─ lsh2.png
@@ -45,7 +45,7 @@ client
 │ │ ├─ lsh5.png
 │ │ ├─ lsh6.png
 │ │ └─ react.svg
-│ ├─ components                      # Reusable UI components (Hero, Navbar, Stats)
+│ ├─ components                      # Reusable UI components
 │ │ ├─ AboutUs.jsx
 │ │ ├─ BloodTicker.jsx
 │ │ ├─ CallToAction.jsx
@@ -61,7 +61,7 @@ client
 │ ├─ context                        # Authentication logic & Global state
 │ │ ├─ AuthContext.jsx
 │ │ └─ AuthProvider.jsx
-│ ├─ Dashboard                      # Role-based dashboard modules
+│ ├─ Dashboard                      # Role based dashboard modules
 │ │ ├─ admin                        # User management & Site-wide stats
 │ │ │ ├─ AdminHome.jsx
 │ │ │ ├─ AllRequests.jsx
@@ -76,8 +76,8 @@ client
 │ │ │ ├─ MyRequests.jsx
 │ │ │ └─ ViewRequest.jsx
 │ │ └─ volunteer                    # Request status management
-│ │ ├─ VolunteerHome.jsx
-│ │ └─ VolunteerRequests.jsx
+│ │   ├─ VolunteerHome.jsx
+│ │   └─ VolunteerRequests.jsx
 │ ├─ firebase
 │ │ └─ firebase.config.js
 │ ├─ hooks                           # Custom hooks
@@ -89,7 +89,7 @@ client
 │ │ └─ MainLayout.jsx
 │ ├─ main.jsx
 │ ├─ index.css
-│ ├─ pages                          # High-level views (Home, Funding, Search)
+│ ├─ pages                          # High-level views 
 │ │ ├─ DashboardHome.jsx
 │ │ ├─ ErrorPage.jsx
 │ │ ├─ Funding.jsx
@@ -97,7 +97,7 @@ client
 │ │ ├─ Login.jsx
 │ │ ├─ Register.jsx
 │ │ └─ RegisterVolunteer.jsx
-│ └─ routes                         # Protected and Role-based routing logic
+│ └─ routes                         # Protected & Role-based routing logic
 │   ├─ PrivateRoute.jsx
 │   ├─ RoleRoute.jsx
 │   └─ router.jsx
@@ -133,11 +133,11 @@ For testing purposes, you may use the following accounts:
 
 - **Role-Based Access Control (RBAC)**: Distinct permissions for Donors, Volunteers & Admins.
 
-- **Search & Filter**: Advanced search for blood requests by Blood Group, District, and Upazila.
+- **Search & Filter**: Advanced search for blood requests by Blood Group, District & Upazila.
 
-- **Donation Management**: Create, Edit, and Track blood donation requests in real-time.
+- **Donation Management**: Create, Edit, & Track blood donation requests in real-time.
 
-- **Secure Payments**: Integrated Stripe gateway for platform funding and community support.
+- **Secure Payments**: Integrated Stripe gateway for platform funding & community support.
 
 - **Security**: Middleware-protected API endpoints using Firebase Admin SDK.
 
@@ -175,7 +175,7 @@ npm run dev
 
 ## 📄 License & Purpose
 
-This project is not licensed for commercial use. It was developed as a technical showcase to demonstrate mastery of:
+This project is not licensed for commercial use. It was developed as a technical showcase to demonstrate hands on practice task of:
 
 - Complex Role-Based Dashboards
 
@@ -191,7 +191,7 @@ This project is not licensed for commercial use. It was developed as a technical
 If you found this project helpful or learned something new from the implementation, please consider giving this repository a Star ⭐!
 
 ## 🛠️ Need Customization or Upgrades?
-Looking to scale this platform or need help with a similar MERN stack deployment? I'm open to collaborations and technical consultations.
+Looking to scale this platform or need help with a similar MERN stack deployment? I'm open to collaborations & technical consultations.
 
 Let's build something impactful together!
 
